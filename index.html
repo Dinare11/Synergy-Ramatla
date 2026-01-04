@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon" />
+<title>Synergy Ramatla</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+
+/*Animation*/
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      top: 40%;
+      font-size: 2rem;
+    }
+
+
+/* ===== GENERAL RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+ body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+       background-color: white; /* fallback background */
+      color: black;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+   /*Space between icon in the footer*/
+    li a i {
+  margin-right: 8px; /* Adjust space as needed */
+}
+
+ul li i {
+  margin-right: 8px; /* space between icon and text */
+}
+
+
+
+/* ===== HERO SECTION ===== */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: #007bff;
+  color: white;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.hero p.muted {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+}
+
+/*Picture Slider*/
+/* ===== SLIDER ===== */
+
+.slider {
+  position: relative;
+  max-width: 1350px;
+  height: 300px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: /*0 10px 30px rgba(0,0,0,0.2)*/ none;
+  background:none;
+  margin-top: 5px; /* Adjust the value as needed */
+  align-items: stretch;
+  border: none;
+  outline: none;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 90%;
+  object-fit: contain;
+  position: absolute;
+  align-items: center;
+  border: none;
+}
+
+/* Overlay as side panel */
+.slide .overlay {
+  width: 30%;
+  height: 80%;               /* use 80% of slide height */
+  background: /*rgba(0, 0, 0, 0.65)*/ transparent;
+  color: /*#fff*/ darkblue;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;          /* scroll only if content exceeds height */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* anchor to top */
+  margin-left: 20px;           /* space between image and panel */
+  border-radius: 8px;          /* optional: rounded corners for panel */
+  align-items: center;
+}
+
+/*---H4 Text--*/
+.slides h1 {
+  font-weight: 800;       /* medium-bold */
+  font-size: 2rem;      /* adjust as needed */
+  margin-bottom: 10px;
+  line-height: 1.3;
+  text-align: center;
+  color: darkblue;
+}
+/* Headings */
+.slide .overlay h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  line-height: 1.0;
+  flex-shrink: 0;            /* don’t shrink heading */
+}
+
+/* Paragraph text */
+.slide .overlay p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  flex-grow: 1;              /* expand paragraph to fill remaining overlay height */
+  overflow-y: auto;          /* scroll if paragraph too long */
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .slide .overlay {
+    margin-left: 15px;
+  }
+  .slide .overlay h2 {
+    font-size: 1.5rem;
+  }
+  .slide .overlay p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide .overlay {
+    padding: 15px 20px;
+    /*max-height: 60%;*/
+    margin-left: 0; /* stack under image on mobile */
+    width: 100%;
+    height: 50%;
+
+  }
+  .slide .overlay h2 {
+    font-size: 1.2rem;
+  }
+  .slide .overlay p {
+    font-size: 0.85rem;
+  }
+}
+
+
+/* ===== TEXT OVERLAY ===== */
+.overlay {
+  position: absolute;
+  bottom: 20%;
+  left: 8%;
+  color: white;
+  max-width: 600px;
+  animation: slideUp 1s ease forwards;
+}
+
+.overlay h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== BUTTONS ===== */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 28px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.prev { 
+  left: calc((100% - 92%) / 2 - 30px); /* center of left half minus offset */; 
+}
+
+.next { 
+  right: calc((100% - 30%) / 2 - 30px); /* center of left half minus offset */; 
+}
+
+/* ===== DOT INDICATORS ===== */
+.dots {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  z-index: 5;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #ffffff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .slider {
+    height: 260px;
+  }
+  .overlay h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/*Mission Vision*/
+ .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 0;
+    }
+
+    /* Section layout */
+    .section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .section.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .section img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .text-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .text-content h2 {
+      color: #1b3d5a;
+      margin-bottom: 20px;
+    }
+
+    .text-content p {
+      margin-bottom: 15px;
+    }
+
+    /* Mission / Vision / Philosophy list */
+    .list-items {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .check-icon {
+      width: 50px;
+      height: 50px;
+      background-color: #1b3d5a;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .list-item h3 {
+      margin: 0 0 10px 0;
+      color: #1b3d5a;
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        flex-direction: column;
+      }
+      .section.reverse {
+        flex-direction: column;
+      }
+      .text-content, .list-items {
+        padding: 10px 0;
+      }
+      .check-icon {
+        margin-bottom: 10px;
+      }
+    }
+
+/* Footer */
+  footer {
+    background-color: #1a73e8;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .footer-section {
+    flex: 1 1 200px;
+  }
+
+  .footer-section h4 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+
+  .footer-section ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-section ul li a:hover {
+    color: #ffdd57;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+  }
+
+  .social-icons a {
+    color: white;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: #ffdd57;
+  }
+
+/* ===== FADE-IN ANIMATION ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .grid, .info-grid {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .card-cta, .info-card ul {
+    flex-direction: column;
+  }
+}
+</style>
+<style>
+/* Page Loader Overlay */
+#page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+/* Hide loader */
+#page-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0a58ca;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+<!--Clickable Icon-->
+<style>
+a img {
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+  <!-- Page Loader -->
+<div id="page-loader">
+  <div class="spinner"></div>
+</div>
+
+
+  <!--Network Canvas-->
+
+  <canvas id="networkCanvas"></canvas>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="brand">
+    <a href="index.html">
+    <img src="images/logo.ico" alt="Logo" width="300">
+  </a>
+    <h1>Synergy Ramatla</h1>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <i class="fas fa-bars"></i>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="services.html"><i class="fas fa-briefcase"></i> Services</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a>
+  </div>
+</nav>
+
+<!--Mission Vision Philosophy-->
+ <div class="container">
+    <!-- Introduction Section -->
+    <div class="section">
+      <div class="text-content">
+        <h2>Synergy Ramatla Pty (Ltd) Introduction</h2>
+          <p>Synergy Ramatla Pty (Ltd) is a forward-thinking ICT solutions provider dedicated to empowering businesses and individuals through innovative technology. We specialize in delivering customized IT services, network solutions, 
+             and office automation tools that drive efficiency, productivity, and growth.</p>
+          <p>Our team combines deep technical expertise with a client-focused approach, ensuring reliable, secure, and 
+             scalable solutions for every project. Guided by our core values of integrity, innovation, and excellence, 
+             we strive to set the standard for quality and professionalism in the ICT industry.</p>
+          <p>In addition to our ICT services, Synergy Ramatla Pty (Ltd) offers comprehensive office administration solutions 
+             designed to streamline operations and improve workplace efficiency. From document management, scheduling, and 
+              correspondence handling to workflow optimization and support services, we ensure that your administrative 
+              processes are seamless, organized, and fully aligned with your business goals.</p>
+          <p>From infrastructure and cabling solutions to technical support and system optimization, 
+              Synergy Ramatla Pty (Ltd) provides end-to-end services tailored to meet the unique needs of our clients, 
+              enabling them to succeed in an increasingly digital world.</p>
+      </div>
+      <div>
+        <img src="images/tech team2.webp" alt="Synergy Image">
+      </div>
+    </div>
+
+    <!-- Mission / Vision / Philosophy Section -->
+    <div class="section reverse">
+      <div>
+        <img src="images/tech team3.jpg" alt="Team Image">
+      </div>
+      <div class="list-items">
+        <div class="list-item">
+          <div class="check-icon">&#10003;</div>
+          <div>
+            <h3>Mission</h3>
+            <p>To be the partner of choice for leading service providers, government agencies and major businesses by maximising stakeholder value and building mutually beneficial partnerships.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="check-icon">&#10003;</div>
+          <div>
+            <h3>Vision</h3>
+            <p>To be the market leader in our respective provinces through delivering operational excellence, dynamic services and innovative products by forming value-driven and sustainable partnerships.</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="check-icon">&#10003;</div>
+          <div>
+            <h3>Philosophy</h3>
+            <p>Simply Batho Pele, whether you are a customer, supplier, employee or a business associate, people are at the centre of our core values.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!--Picture Slider-->
+<!-- IMAGE SLIDER -->
+<section class="slider-section">
+  <div class="slider">
+
+    <div class="slides">
+      <h1>Company Directors</h1>
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <img src="images/tshepang.jpg" alt="">
+        <div class="overlay">
+          <h2>Innovative ICT Solutions & Security Specialist</h2>
+          <p>Tshepang Ramatla serves as Director of the company and contributes a strong combination of information technology and financial systems expertise. 
+            He holds a Diploma in Information Technology and a National Diploma in Financial Information Systems, 
+            complemented by professional certifications and technical training including CompTIA Security+, 
+            Optical Fibre Splicing and Maintenance, Microsoft Windows Server 2012 R2, and System Development 
+            and Support. His skill set supports secure, efficient, and scalable technology environments, 
+            enabling informed decision-making, robust system implementation, and effective oversight of the company’s 
+            technical and financial information systems.</p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <img src="images/bridgette.jpg" alt="">
+        <div class="overlay">
+          <h2>Innovative ICT Solutions & administrative Specialist</h2>
+          <p>Bridgette Ramatla is the Director of the company and brings a multidisciplinary professional background that combines office management, technology, and systems support. 
+            She holds a Diploma in Office Management and Technology and an Advanced Diploma in Monitoring and Evaluation,
+             supported by strong technical credentials including CompTIA Network+, Optical Fibre Splicing and Maintenance, 
+             Technical Support, System Development and Support, and Basic Computing. This blend of administrative leadership and 
+             hands-on technical expertise enables her to provide strategic direction, ensure operational efficiency, and 
+             drive the delivery of reliable, technology-driven solutions aligned with organizational goals.
+          </p>
+        </div>
+      </div>
+
+      <!-- Repeat structure up to slide15 -->
+      <!-- Slide 3–15 -->
+      <!-- Change text per image -->
+    </div>
+
+    <!-- Controls -->
+    <button class="slider-btn prev">&#10094;</button>
+    <button class="slider-btn next">&#10095;</button>
+
+    <!-- Indicators -->
+    <div class="dots"></div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Home</h4>
+      <p>Synergy Ramatla (Pty) Ltd – Your partner in progress.</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="services.html"><i class="fas fa-briefcase"></i> Services</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+        <h4>Contact</h4>
+
+      <!--Contacts-->
+       <ul class="contact-list">
+      <li><i class="fa fa-envelope"></i> Email: <a href="mailto:tbramatla11@gmail.com">tbramatla11@gmail.com</a></li>
+      <li><i class="fa fa-phone"></i> Phone: <a href="tel:+27723483624">+27 72 348 3624</a></li>
+      <li><i class="fa fa-map-marker-alt"></i> Address: <a href="https://www.google.com/maps/place/Seiphemo+Primary+School/@-29.1723404,26.7824246" target="_blank">Thaba Nchu, South Africa</a></li>
+      </ul>
+
+      <!--Social media-->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/YourPageName" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@YourUsername" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/+723483624" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 Synergy Ramatla (Pty) Ltd. All Rights Reserved.
+  </div>
+
+</footer>
+
+ <script>
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodesCount = 80; // number of nodes
+    const maxDistance = 150; // max distance to draw lines
+
+    const nodes = [];
+
+    // Create nodes
+    for (let i = 0; i < nodesCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 1,
+        vy: (Math.random() - 0.5) * 1,
+        radius: Math.random() * 3 + 2
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Update nodes position
+      nodes.forEach(node => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ffff';
+        ctx.fill();
+      });
+
+      // Draw lines between close nodes
+      for (let i = 0; i < nodesCount; i++) {
+        for (let j = i + 1; j < nodesCount; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxDistance) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 255, ${1 - distance / maxDistance})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Make canvas responsive
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  // Fade-in on scroll
+  const items = document.querySelectorAll('.about-content ul li');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  items.forEach(item => {
+    observer.observe(item);
+  });
+</script>
+
+<!--Picture Slider-->
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  const dotsContainer = document.querySelector('.dots');
+
+  let index = 0;
+  let startX = 0;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  function showSlide(i) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    slides[i].classList.add('active');
+    dots[i].classList.add('active');
+    index = i;
+  }
+
+  nextBtn.onclick = () => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  };
+
+  prevBtn.onclick = () => {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+  };
+
+  /* Auto slide */
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }, 20000);
+
+  /* Touch swipe */
+  document.querySelector('.slider').addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  document.querySelector('.slider').addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50) nextBtn.click();
+    if (endX - startX > 50) prevBtn.click();
+  });
+</script>
+
+  <!--Page load-->
+<script>
+  // Hide loader after page fully loads
+  window.addEventListener("load", () => {
+    document.getElementById("page-loader").classList.add("hidden");
+  });
+
+  // Show loader when navigating to another page
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href");
+
+      // Ignore empty links, anchors, and external targets
+      if (!href || href.startsWith("#") || link.target === "_blank") return;
+
+      event.preventDefault();
+      document.getElementById("page-loader").classList.remove("hidden");
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    });
+  });
+</script>
+
+
+</body>
+</html>

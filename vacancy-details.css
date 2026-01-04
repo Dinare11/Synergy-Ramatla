@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+.vacancies-hero {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.vacancies-hero h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.vacancies-hero p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.vacancies-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+.vacancy-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.vacancy-card h3 {
+  margin-top: 25px;
+  color: #1e3c72;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 5px;
+}
+
+.vacancy-card p {
+  line-height: 1.6;
+}
+
+.vacancy-card ul {
+  padding-left: 20px;
+}
+
+.vacancy-card ul li {
+  margin-bottom: 8px;
+}
+
+.apply-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 14px 28px;
+  background: #1e3c72;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.apply-btn:hover {
+  background: #16315f;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .vacancy-card {
+    padding: 20px;
+  }
+}

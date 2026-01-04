@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon" />
+<title>Synergy Ramatla</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+      --bg:#f4f6fb;
+      --card:#ffffff;
+      --accent:#3b82f6;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(18,38,63,0.08);
+      --container:1200px;
+      --gap:20px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+       background-color: white; /* fallback background */
+      color: black;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /*Space between icon in the footer*/
+    li a i {
+  margin-right: 8px; /* Adjust space as needed */
+    }
+
+    ul li i {
+  margin-right: 8px; /* space between icon and text */
+    }
+
+    /*Canvas Animation*/
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* behind all content */
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      top: 40%;
+      font-size: 2rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    }
+
+    /* NAV */
+     .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #1a73e8;
+    color: white;
+    position: relative;
+  }
+
+    .nav-wrap{
+      background:linear-gradient(90deg,#ffffffcc, #f8fbff);
+      backdrop-filter: blur(4px);
+      position:sticky;
+      top:0;
+      z-index:40;
+      border-bottom:1px solid rgba(15,23,42,0.04)}
+
+    .container{max-width:var(--container);
+      margin:0 auto;
+      padding:18px 20px}
+
+    nav{display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px}
+
+    .brand{font-weight:700;
+      letter-spacing:0.2px;
+      color:white}
+
+    .nav-links{display:flex;
+      gap:18px;
+      align-items:center}
+
+    .nav-links a{color:inherit;
+      text-decoration:none;
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:600}
+
+    .nav-links a:hover{background:rgba(59,130,246,0.08);
+      color: #ffdd57;}
+
+    /* HERO */
+    .hero{
+      padding:36px 0;
+      text-align:center}
+    .hero h1{
+      margin:4px 0 8px;
+      font-size:clamp(20px,3.5vw,32px)}
+    .hero p{
+      margin:0;
+      color:black}
+
+    /* GRID */
+    .grid-wrap{
+      padding:28px 20px 72px}
+    .grid{display:grid;
+      gap:var(--gap);
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      max-width:var(--container);
+      margin:0 auto}
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      transition:transform .28s cubic-bezier(.2,.9,.27,1),box-shadow .28s;
+      min-height:260px;
+      border:1px solid rgba(10,20,40,0.03);
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 14px 30px rgba(18,38,63,0.12)}
+
+    .card-media{
+      height:120px;
+      background:linear-gradient(135deg,#e0f2fe,#eef2ff);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#083344;font-size:28px
+    }
+    .card-content{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .card-title{font-size:16px;margin:0}
+    .card-text{color: black;font-size:13px;margin:0;flex:1}
+    .card-cta{display:flex;gap:8px;align-items:center}
+    .btn{display:inline-block;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:600}
+    .btn-outline{border:1px solid rgba(15,23,42,0.06);background:transparent;color:var(--accent)}
+    .btn-primary{background:var(--accent);color:white}
+
+    /*Flicker*/
+    /* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  align-items: center;
+}
+
+/* CARD CONTAINER */
+.flicker-card {
+  perspective: 1000px;
+  height: 320px;
+}
+
+/* INNER ROTATION */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s ease;
+  transform-style: preserve-3d;
+}
+
+.flicker-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* CARD FACES */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* FRONT */
+.card-front img {
+  width: 100%;
+  height: 120%;
+  object-fit: scale-down;
+  margin-bottom: 16px;
+}
+
+.card-front h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* BACK */
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #0a2540, #133b5c);
+  color: #ffffff;
+}
+
+.card-back h3 {
+  margin-bottom: 12px;
+}
+
+.card-back p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* SLIDER WRAPPER */
+.flicker-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+  align-items: center;
+}
+
+/* HORIZONTAL TRACK */
+.flicker-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: slide-horizontal 30s linear infinite;
+}
+
+/* STOP SLIDE ON HOVER */
+.flicker-slider:hover .flicker-track {
+  animation-play-state: paused;
+}
+
+/* CARD SIZE */
+.flicker-card {
+  min-width: 260px;
+  height: 320px;
+  flex-shrink: 0;
+}
+
+/* AUTO SLIDE KEYFRAMES 
+@keyframes slide-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}*/
+/* SLIDER */
+.flicker-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 30px 0;
+}
+
+/* TRACK */
+.flicker-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+/* CARD WIDTH */
+.flicker-card {
+  min-width: 260px;
+  height: 320px;
+  flex-shrink: 0;
+}
+
+/* DOTS */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.slider-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #bbb;
+  cursor: pointer;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.slider-dots button.active {
+  background: #0a2540;
+  transform: scale(1.4);
+}
+
+.flicker-track {
+  transition: transform 0.6s ease;
+}
+
+/* ARROWS */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10, 37, 64, 0.8);
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  padding: 8px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.arrow:hover {
+  background: rgba(10, 37, 64, 1);
+}
+
+.arrow-left {
+  left: 10px;
+}
+
+.arrow-right {
+  right: 10px;
+}
+
+/* Ensure slider relative positioning */
+.flicker-slider {
+  position: relative;
+}
+
+
+    /* Footer */
+    footer{
+      padding:32px 20px;
+      text-align:center;
+      color: white;
+      border-top:1px solid rgba(15,23,42,0.03);
+      background-color: #1a73e8;}
+
+    /* Responsive tweaks */
+    @media (max-width:720px){
+      .nav-links{display:none}
+      .brand{font-size:15px}
+      .hero h1{font-size:20px}
+    }
+
+    /* Small helpers */
+    .muted{color:var(--muted)}
+  </style>
+
+<!--Page Loader-->
+<style>
+/* Hide loader */
+#page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+#page-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0a58ca;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+</head>
+<body>
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="spinner"></div>
+</div>
+
+  <!--Canvas Animation-->
+  <canvas id="networkCanvas"></canvas>
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="brand">
+    <a href="index.html">
+    <img src="images/logo.ico" alt="Logo" width="300">
+  </a>
+    <h1>Synergy Ramatla</h1>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <i class="fas fa-bars"></i>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="services.html"><i class="fas fa-briefcase"></i> Services</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a>
+  </div>
+</nav>
+
+    <!--Main-->
+  <main>
+    <section id="home" class="hero container">
+      <h1>Provided Services</h1>
+      <p class="muted">Meeting customer needs: Services are tailored to help customers achieve their goals or solve challenges. 
+        IT support helps a business keep computers and networks running smoothly, and training programs help employees improve their skills.
+        Delivering value: Services provide benefits that improve efficiency, save time, reduce costs, or enhance performance. 
+        Web development services allow a company to have an online presence, reach more customers, and generate revenue</p>
+    </section>
+
+      <!-- Flicker Cards Slider -->
+<section class="flicker-slider">
+
+  <div class="flicker-track" id="flickerTrack">
+
+    <!-- CARD 1 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/Application-Software.jpg" alt="">
+          <h3>Software Applications</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Software Applications</h3>
+          <p>Programs designed to help users perform specific tasks such as document creation, 
+            data management, communication, and productivity, either installed locally or accessed online.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 2 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/operating sys.jpg" alt="">
+          <h3>Operating Systems</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Operating Systems</h3>
+          <p>Core system software that manages hardware resources, runs applications, and 
+              ensures security, stability, and user access control</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 3 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/windows security.jpg" alt="">
+          <h3>Windows Security</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Windows Security</h3>
+          <p>Built-in Windows tools that protect systems and 
+            from malware, unauthorized access, and online threats while enabling safe internet and application use.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 4 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/communication-tools.jpeg" alt="">
+          <h3>Communication Tools</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Communication Tools</h3>
+          <p>Digital platforms that enable efficient information sharing and
+            collaboration through text, audio, video, or mixed formats for business, education, and personal use.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 5 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/Doc-Mgmt.png" alt="">
+          <h3>Document Management</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Document Management</h3>
+          <p>Systems that store, organize, secure, and 
+            track documents to improve accessibility, workflow efficiency, collaboration, and regulatory compliance.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 6 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/cabling.jpg" alt="">
+          <h3>Network Infrastructure</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Network Infrastructure</h3>
+          <p>The hardware and software foundation that enables device connectivity, 
+              communication, and secure data transmission across networks.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 7 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/office-equipment.jpg" alt="">
+          <h3>Office Supplies</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Office Supplies</h3>
+          <p>Essential tools, equipment, and materials that support daily administrative tasks and
+               ensure smooth, organized office operations.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 8 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/security.jpg" alt="">
+          <h3>Data Protection</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Data Protection</h3>
+          <p>Practices and technologies that safeguard information from loss, theft, or 
+              unauthorized access, ensuring confidentiality, integrity, and availability.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 9 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/VoIP.jpg" alt="">
+          <h3>Voice over IP</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Voice over IP</h3>
+          <p>Internet-based communication technology that 
+            enables voice and multimedia calls with greater flexibility and cost efficiency than traditional phone systems.</p>
+        </div>
+      </div>
+    </article>
+
+      <!-- CARD 10 -->
+    <article class="card flicker-card">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <img src="images/Fibre Installation.jpg" alt="">
+          <h3>Fibre To The Home</h3>
+        </div>
+        <div class="card-face card-back">
+          <h3>Fibre To The Home</h3>
+          <p>High-speed broadband technology delivering reliable,
+               high-bandwidth internet directly to homes via optical fiber, supporting modern digital applications.</p>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- Left/Right Arrows -->
+  <button class="arrow arrow-left" id="arrowLeft">&#10094;</button>
+  <button class="arrow arrow-right" id="arrowRight">&#10095;</button>
+  
+  <!-- DOT INDICATORS -->
+  <div class="slider-dots" id="sliderDots"></div>
+
+</section>
+
+  </main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Services</h4>
+      <p>Synergy Ramatla (Pty) Ltd – Your partner in progress.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="services.html"><i class="fas fa-briefcase"></i> Services</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+
+      <h4>Contact</h4>
+
+      <!--Contacts-->
+       <ul class="contact-list">
+        <li><i class="fa fa-envelope"></i> Email: <a href="mailto:tbramatla11@gmail.com">tbramatla11@gmail.com</a></li>
+        <li><i class="fa fa-phone"></i> Phone: <a href="tel:+27723483624">+27 72 348 3624</a></li>
+        <li><i class="fa fa-map-marker-alt"></i> Address: <a href="https://www.google.com/maps/place/Seiphemo+Primary+School/@-29.1723404,26.7824246" target="_blank">Thaba Nchu, South Africa</a></li>
+      </ul>
+
+      <!--Social media-->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/YourPageName" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@YourUsername" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/+723483624" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <div class="footer-bottom">
+    &copy; 2025 Synergy Ramatla (Pty) Ltd. All Rights Reserved.
+  </div>
+</footer>
+
+<!--Canvas Animation-->
+
+  <script>
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Full-page sizing
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodesCount = 100;
+    const maxDistance = 150;
+
+    const nodes = [];
+
+    // Initialize nodes
+    for (let i = 0; i < nodesCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        radius: Math.random() * 3 + 1.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw nodes
+      nodes.forEach(node => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        // Bounce from edges
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ffff';
+        ctx.fill();
+      });
+
+      // Draw lines between nearby nodes
+      for (let i = 0; i < nodesCount; i++) {
+        for (let j = i + 1; j < nodesCount; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxDistance) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 255, ${1 - distance / maxDistance})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Update canvas on resize
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  // Fade-in on scroll
+  const items = document.querySelectorAll('.about-content ul li');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  items.forEach(item => {
+    observer.observe(item);
+  });
+</script>
+
+<!--Page Loader-->
+<script>
+  // Hide loader after page fully loads
+  window.addEventListener("load", () => {
+    document.getElementById("page-loader").classList.add("hidden");
+  });
+
+  // Show loader when navigating to another page
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href");
+
+      // Ignore empty links, anchors, and external targets
+      if (!href || href.startsWith("#") || link.target === "_blank") return;
+
+      event.preventDefault();
+      document.getElementById("page-loader").classList.remove("hidden");
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    });
+  });
+</script>
+
+<!--RTL SLIDE-->
+<script>
+  const slider = document.querySelector(".flicker-slider");
+  const track = document.getElementById("flickerTrack");
+  const cards = document.querySelectorAll(".flicker-card");
+  const dotsContainer = document.getElementById("sliderDots");
+
+  let index = 0;
+  let interval;
+
+  /* CREATE DOTS (1 DOT = 1 CARD) */
+  cards.forEach((card, i) => {
+    const dot = document.createElement("button");
+    dot.setAttribute("aria-label", `Go to card ${i + 1}`);
+
+    if (i === 0) dot.classList.add("active");
+
+    dot.addEventListener("click", () => {
+      index = i;
+      moveToCard(index);
+      restartAutoSlide();
+    });
+
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll("button");
+
+  /* CORE POSITIONING LOGIC (EXACT CARD CENTERING) */
+  function moveToCard(i) {
+    const sliderCenter = slider.offsetWidth / 2;
+    const cardCenter = cards[i].offsetLeft + cards[i].offsetWidth / 2;
+    const translateX = sliderCenter - cardCenter;
+
+    track.style.transform = `translateX(${translateX}px)`;
+
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[i].classList.add("active");
+  }
+
+  /* AUTO SLIDE (RTL ORDER) */
+  function startAutoSlide() {
+    interval = setInterval(() => {
+      index = (index + 1) % cards.length;
+      moveToCard(index);
+    }, 3000);
+  }
+
+  function restartAutoSlide() {
+    clearInterval(interval);
+    startAutoSlide();
+  }
+
+  /* PAUSE ON HOVER */
+  slider.addEventListener("mouseenter", () => clearInterval(interval));
+  slider.addEventListener("mouseleave", startAutoSlide);
+
+  /* HANDLE RESIZE */
+  window.addEventListener("resize", () => moveToCard(index));
+
+  /* INIT */
+  moveToCard(0);
+  startAutoSlide();
+</script>
+
+<!--ARROWS-->
+<script>
+const arrowLeft = document.getElementById("arrowLeft");
+const arrowRight = document.getElementById("arrowRight");
+
+let autoSlideActive = true; // tracks auto-slide
+
+function stopAutoSlideCompletely() {
+  clearInterval(interval);
+  autoSlideActive = false;
+}
+
+/* LEFT ARROW CLICK */
+arrowLeft.addEventListener("click", () => {
+  stopAutoSlideCompletely();
+  index = (index - 1 + cards.length) % cards.length;
+  moveToCard(index);
+});
+
+/* RIGHT ARROW CLICK */
+arrowRight.addEventListener("click", () => {
+  stopAutoSlideCompletely();
+  index = (index + 1) % cards.length;
+  moveToCard(index);
+});
+
+/*Resume after click*/
+let resumeTimeout;
+
+arrowLeft.addEventListener("click", () => {
+  stopAutoSlideCompletely();
+  index = (index - 1 + cards.length) % cards.length;
+  moveToCard(index);
+
+  clearTimeout(resumeTimeout);
+  resumeTimeout = setTimeout(() => {
+    autoSlideActive = true;
+    startAutoSlide();
+  }, 5000); // resume after 5 seconds
+});
+
+</script>
+
+</body>
+</html>

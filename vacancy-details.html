@@ -1,0 +1,565 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vacancy Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="vacancy-details.css">
+
+  <!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+.vacancies-hero {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  padding: 10px 10px;
+  text-align: center;
+}
+
+.vacancies-hero h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.vacancies-hero p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.vacancies-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+.vacancy-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.vacancy-card h3 {
+  margin-top: 25px;
+  color: #1e3c72;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 5px;
+}
+
+.vacancy-card p {
+  line-height: 1.6;
+}
+
+.vacancy-card ul {
+  padding-left: 10px;
+}
+
+.vacancy-card ul li {
+  margin-bottom: 8px;
+}
+
+.apply-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 14px 28px;
+  background: #1e3c72;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.apply-btn:hover {
+  background: #16315f;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .vacancy-card {
+    padding: 10px;
+  }
+}
+
+     /* Navbar */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #1a73e8;
+    color: white;
+    position: relative;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .brand h1 {
+    font-size: 1.5rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: #ffdd57;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 70px;
+      right: 0;
+      background-color: #1a73e8;
+      flex-direction: column;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    .nav-links a {
+      padding: 15px 20px;
+    }
+
+    .nav-links.active {
+      max-height: 500px;
+    }
+
+    .hamburger {
+      display: block;
+    }
+  }
+
+/* Footer */
+  footer {
+    background-color: #1a73e8;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .footer-section {
+    flex: 1 1 200px;
+  }
+
+  .footer-section h4 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+
+  .footer-section ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-section ul li a:hover {
+    color: #ffdd57;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+  }
+
+  .social-icons a {
+    color: white;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: #ffdd57;
+  }
+
+
+</style>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="brand">
+    <a href="index.html">
+    <img src="images/logo.ico" alt="Logo" width="300">
+  </a>
+    <h1>Synergy Ramatla</h1>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <i class="fas fa-bars"></i>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="services.html"><i class="fas fa-briefcase"></i> Services</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a>
+  </div>
+</nav>
+
+<section class="vacancies-hero">
+  <h1 id="jobTitle"></h1>
+  <p id="jobMeta"></p>
+</section>
+
+<section class="vacancies-container">
+  <div class="vacancy-card">
+
+    <h3>Job Description</h3>
+    <p id="jobDescription"></p>
+
+    <h3>Responsibilities</h3>
+    <ul id="jobResponsibilities"></ul>
+
+    <h3>Requirements</h3>
+    <ul id="jobRequirements"></ul>
+
+    <a id="applyBtn" class="apply-btn">Apply Online</a>
+
+  </div>
+</section>
+
+<!--Job list-->
+<script>
+const jobs = {
+  1: {
+    title: "ICT Support Technician",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The ICT Support Technician will provide first- and second-line technical support, assist with system maintenance, and troubleshoot network and hardware issues.",
+    responsibilities: [
+      "Provide desktop, hardware, and software support",
+      "Troubleshoot LAN, WAN, and Wi-Fi issues",
+      "Install and maintain ICT equipment",
+      "Document technical issues and resolutions"
+    ],
+    requirements: [
+      "IT Certificate or Diploma",
+      "Basic networking knowledge",
+      "Strong communication skills",
+      "Willingness to learn"
+    ]
+  },
+
+  2: {
+    title: "Office Administrator",
+    location: "Thaba Nchu",
+    type: "Contract",
+    description:
+      "Responsible for managing daily office operations, documentation, scheduling, and general administrative support.",
+    responsibilities: [
+      "Manage office correspondence",
+      "Schedule meetings and calendars",
+      "Assist with invoicing and procurement",
+      "Maintain filing systems"
+    ],
+    requirements: [
+      "Office Administration qualification",
+      "MS Word & Excel skills",
+      "Strong organisational skills"
+    ]
+  },
+
+  3: {
+    title: "Network Technician",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Network Technician installs, maintains, and troubleshoots networking systems and equipment to ensure optimal connectivity.",
+    responsibilities: [
+      "Install and configure network devices",
+      "Monitor network performance",
+      "Troubleshoot network issues",
+      "Maintain network documentation"
+    ],
+    requirements: [
+      "Networking certification (CCNA or similar)",
+      "Understanding of LAN/WAN technologies",
+      "Problem-solving skills",
+      "Attention to detail"
+    ]
+  },
+
+  4: {
+    title: "Financial Accountant",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Financial Accountant manages financial records, prepares statements, and ensures compliance with financial regulations.",
+    responsibilities: [
+      "Prepare monthly financial statements",
+      "Manage accounts payable and receivable",
+      "Reconcile bank statements",
+      "Ensure compliance with tax regulations"
+    ],
+    requirements: [
+      "Accounting degree or diploma",
+      "Experience with accounting software",
+      "Attention to detail",
+      "Analytical thinking"
+    ]
+  },
+
+  5: {
+    title: "HR Manager",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The HR Manager oversees recruitment, employee relations, and HR processes to support organizational objectives.",
+    responsibilities: [
+      "Manage recruitment and onboarding",
+      "Develop HR policies and procedures",
+      "Handle employee relations and performance management",
+      "Ensure compliance with labor laws"
+    ],
+    requirements: [
+      "HR qualification or diploma",
+      "Experience in HR management",
+      "Strong interpersonal skills",
+      "Knowledge of labor legislation"
+    ]
+  },
+
+  6: {
+    title: "Marketing Officer",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Marketing Officer develops and executes marketing campaigns to increase brand awareness and engagement.",
+    responsibilities: [
+      "Plan and implement marketing campaigns",
+      "Manage social media accounts",
+      "Coordinate marketing materials and events",
+      "Analyze marketing data and metrics"
+    ],
+    requirements: [
+      "Marketing or Business qualification",
+      "Knowledge of digital marketing",
+      "Creativity and communication skills",
+      "Analytical mindset"
+    ]
+  },
+
+  7: {
+    title: "Sales Executive",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Sales Executive is responsible for generating sales, building client relationships, and achieving sales targets.",
+    responsibilities: [
+      "Identify and contact potential clients",
+      "Prepare and present sales proposals",
+      "Negotiate contracts and close deals",
+      "Maintain customer relationships"
+    ],
+    requirements: [
+      "Sales experience",
+      "Strong communication and negotiation skills",
+      "Target-driven mindset",
+      "Customer-focused attitude"
+    ]
+  },
+
+  8: {
+    title: "Technical Writer",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Technical Writer produces user manuals, guides, and documentation for software and technical products.",
+    responsibilities: [
+      "Write clear and concise technical documents",
+      "Collaborate with developers and engineers",
+      "Edit and proofread documents",
+      "Maintain documentation standards"
+    ],
+    requirements: [
+      "Degree or diploma in Technical Writing, IT, or related field",
+      "Excellent writing and communication skills",
+      "Attention to detail",
+      "Ability to understand technical concepts"
+    ]
+  },
+
+  9: {
+    title: "Graphic Designer",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Graphic Designer creates visual content for print and digital media to support marketing and branding.",
+    responsibilities: [
+      "Design graphics for web, social media, and print",
+      "Collaborate with marketing team",
+      "Maintain brand guidelines",
+      "Produce creative concepts and mockups"
+    ],
+    requirements: [
+      "Graphic Design diploma or degree",
+      "Proficiency in Adobe Creative Suite",
+      "Creativity and artistic skills",
+      "Time management skills"
+    ]
+  },
+
+  10: {
+    title: "Database Administrator",
+    location: "Bloemfontein",
+    type: "Full-Time",
+    description:
+      "The Database Administrator manages and maintains databases, ensuring data integrity, performance, and security.",
+    responsibilities: [
+      "Install and configure databases",
+      "Monitor database performance",
+      "Perform backups and recovery",
+      "Ensure database security"
+    ],
+    requirements: [
+      "Database certification (SQL, Oracle, or similar)",
+      "Experience with database management",
+      "Problem-solving skills",
+      "Attention to detail"
+    ]
+  }
+  
+  // 👉 Add job 3, 4, 5 ... 100+ here
+};
+
+
+const params = new URLSearchParams(window.location.search);
+const jobId = params.get("id");
+const job = jobs[jobId];
+
+if (!job) {
+  document.querySelector(".vacancy-card").innerHTML =
+    "<p class='error'>Vacancy not found. Please return to the vacancies page.</p>";
+} else {
+  document.getElementById("jobTitle").textContent = job.title;
+  document.getElementById("jobMeta").textContent =
+    `${job.location} | ${job.type}`;
+
+  document.getElementById("jobDescription").textContent = job.description;
+
+  job.responsibilities.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    document.getElementById("jobResponsibilities").appendChild(li);
+  });
+
+  job.requirements.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    document.getElementById("jobRequirements").appendChild(li);
+  });
+
+  document.getElementById("applyBtn").href =
+    `apply.html?id=${jobId}`;
+}
+</script>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>About Us</h4>
+      <p>Synergy Ramatla (Pty) Ltd – Your partner in progress.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="services.html"><i class="fas fa-briefcase"></i> Services</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+        <h4>Contact</h4>
+
+      <!--Contacts-->
+       <ul class="contact-list">
+      <li><i class="fa fa-envelope"></i> Email: <a href="mailto:tbramatla11@gmail.com">tbramatla11@gmail.com</a></li>
+      <li><i class="fa fa-phone"></i> Phone: <a href="tel:+27723483624">+27 72 348 3624</a></li>
+      <li><i class="fa fa-map-marker-alt"></i> Address: <a href="https://www.google.com/maps/place/Seiphemo+Primary+School/@-29.1723404,26.7824246" target="_blank">Thaba Nchu, South Africa</a></li>
+      </ul>
+
+      <!--Social media-->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/YourPageName" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@YourUsername" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/+723483624" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    
+  </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 Synergy Ramatla (Pty) Ltd. All Rights Reserved.
+  </div>
+</footer>
+</body>
+</html>

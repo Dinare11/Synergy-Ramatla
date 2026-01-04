@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon" />
+<title>Synergy Ramatla</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+ <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: black;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: black;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    @media(max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,255,255,0.15);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: blue;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 95%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid black;
+      background: rgba(255,255,255,0.05);
+      color: black;
+      font-size: 0.95rem;
+    }
+
+    textarea { min-height: 150px; resize: vertical; }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00ffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #00cccc;
+      transform: scale(1.02);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      border-radius: 16px;
+      border: none;
+    }
+
+    /*Contacts styling*/
+
+     ul.contact-list {
+    list-style: none;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  ul.contact-list li {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+
+  ul.contact-list li i {
+    color: white; /* Icon color */
+    margin-right: 8px;
+  }
+
+  ul.contact-list li a {
+    color: white; /* Link color */
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+  }
+
+  ul.contact-list li a:hover {
+    color: yellow; /* Hover color */
+    text-decoration: underline;
+  }
+  </style>
+
+<!--Dropdown menu-->
+<style>
+/* Style for select dropdown */
+select {
+  width: 95%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid black;
+  background: rgba(255,255,255,0.05);
+  color: black;
+  font-size: 0.95rem;
+  appearance: none; /* Remove default arrow for consistency */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Dropdown hover/focus effect */
+select:focus {
+  outline: none;
+  border: 1px solid #00ffff;
+  background: rgba(0,255,255,0.05);
+  box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+/* Add custom arrow using pseudo-element */
+select::-ms-expand {
+  display: none;
+}
+
+.panel {
+  position: relative;
+}
+
+select {
+  padding-right: 40px; /* space for arrow */
+}
+
+select::after {
+  content: "\f107"; /* FontAwesome chevron-down */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #00ffff;
+}
+
+</style>
+
+  <!--Page Loader-->
+<style>
+/* Hide loader */
+#page-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #0a58ca;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+<!--Clickable Icon-->
+<style>
+a img {
+    cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+  <!-- Page Loader -->
+<div id="page-loader">
+  <div class="spinner"></div>
+</div>
+
+  <!--Canvas Animation-->
+
+<canvas id="networkCanvas"></canvas>
+
+  
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="brand">
+    <a href="index.html">
+    <img src="images/logo.ico" alt="Logo" width="300">
+  </a>
+    <h1>Synergy Ramatla</h1>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <i class="fas fa-bars"></i>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="services.html"><i class="fas fa-briefcase"></i> Services</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a>
+  </div>
+</nav>
+
+<!-- About / Services Section -->
+<section class="about-section">
+  <h2>Get In Touch</h2>
+  <div class="container">
+  <div class="contact-grid">
+
+    <!-- Contact Form -->
+<div class="panel">
+  <form id="contactForm">
+    <label>Name</label>
+    <input type="text" id="name" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>Subject</label>
+    <input type="text" id="subject" required>
+
+    <!-- Services Dropdown -->
+    <label>Service</label>
+    <select id="service" required>
+      <option value="" disabled selected>Select a Service</option>
+      <option value="IT Support">IT Support</option>
+      <option value="Web Development">Web Development</option>
+      <option value="Consulting">Consulting</option>
+      <option value="Training">Training</option>
+    </select>
+
+    <label>Message</label>
+    <textarea id="message" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+</div>
+
+    <!-- Google Map -->
+    <div class="panel map-container">
+      <iframe 
+        src="https://www.google.com/maps?q=Bloemfontein,South+Africa&output=embed"
+        loading="lazy">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Contact Us</h4>
+      <p>Synergy Ramatla (Pty) Ltd – Your partner in progress.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="services.html"><i class="fas fa-briefcase"></i> Services</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+        <li><a href="vacancies.html"><i class="fas fa-users"></i> Vacancies</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+
+      <h4>Contact</h4>
+
+      <!--Contacts-->
+       <ul class="contact-list">
+      <li><i class="fa fa-envelope"></i> Email: <a href="mailto:tbramatla11@gmail.com">tbramatla11@gmail.com</a></li>
+      <li><i class="fa fa-phone"></i> Phone: <a href="tel:+27723483624">+27 72 348 3624</a></li>
+      <li><i class="fa fa-map-marker-alt"></i> Address: <a href="https://www.google.com/maps/place/Seiphemo+Primary+School/@-29.1723404,26.7824246" target="_blank">Thaba Nchu, South Africa</a></li>
+      </ul>
+
+      <!--Social media-->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/YourPageName" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@YourUsername" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/+723483624" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <div class="footer-bottom">
+    &copy; 2025 Synergy Ramatla (Pty) Ltd. All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+
+  // EmailJS Setup
+  (function(){
+    emailjs.init("y-dIu24isghcFncJd"); // replace
+  })();
+
+  document.getElementById("contactForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const service = document.getElementById("service").value; // get selected service
+    const message = document.getElementById("message").value;
+
+    // Send Email
+    emailjs.send("service_1emym7q", "template_85mgm9r", {
+      from_name: name,
+      from_email: email,
+      subject: subject,
+      service: service, // include service
+      message: message
+    }).then(() => {
+      alert("✅ Email sent successfully!");
+    }, (error) => {
+      alert("❌ Email failed: " + error.text);
+    });
+
+    // WhatsApp Message
+    const phoneNumber = "27692088394";
+    const text = encodeURIComponent(
+      `New Message:%0AName: ${name}%0AEmail: ${email}%0ASubject: ${subject}%0AMessage: ${message}`
+    );
+
+    window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
+
+    this.reset();
+  });
+
+</script>
+
+<!--Animation-->
+<script>
+    const canvas = document.getElementById('networkCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const nodesCount = 80; // number of nodes
+    const maxDistance = 150; // max distance to draw lines
+
+    const nodes = [];
+
+    // Create nodes
+    for (let i = 0; i < nodesCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 1,
+        vy: (Math.random() - 0.5) * 1,
+        radius: Math.random() * 3 + 2
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Update nodes position
+      nodes.forEach(node => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ffff';
+        ctx.fill();
+      });
+
+      // Draw lines between close nodes
+      for (let i = 0; i < nodesCount; i++) {
+        for (let j = i + 1; j < nodesCount; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxDistance) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 255, 255, ${1 - distance / maxDistance})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Make canvas responsive
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  // Fade-in on scroll
+  const items = document.querySelectorAll('.about-content ul li');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  items.forEach(item => {
+    observer.observe(item);
+  });
+</script>
+
+<!--Page Loader-->
+<script>
+  // Hide loader after page fully loads
+  window.addEventListener("load", () => {
+    document.getElementById("page-loader").classList.add("hidden");
+  });
+
+  // Show loader when navigating to another page
+  document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href");
+
+      // Ignore empty links, anchors, and external targets
+      if (!href || href.startsWith("#") || link.target === "_blank") return;
+
+      event.preventDefault();
+      document.getElementById("page-loader").classList.remove("hidden");
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    });
+  });
+</script>
+</body>
+</html>
